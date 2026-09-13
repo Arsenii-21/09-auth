@@ -1,0 +1,15 @@
+.main {
+  min-height: calc(100vh - 72px);
+  padding: 64px 24px;
+  background: #f4f1ea;
+}
+.container {
+  width: min(680px, 100%);
+  margin: 0 auto;
+}
+.title {
+  margin-bottom: 32px;
+  color: #26251f;
+  font-size: clamp(40px, 7vw, 68px);
+  line-height: 0.95;
+}
