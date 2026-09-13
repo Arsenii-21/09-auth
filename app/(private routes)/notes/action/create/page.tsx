@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import { openGraphImage } from "@/lib/seo";
-import css from "./page.module.css";
+import css from "@/components/CreateNote/CreateNote.module.css";
 
 export const metadata: Metadata = {
   title: "Create a note | NoteHub",
