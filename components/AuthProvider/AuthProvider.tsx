@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, type ReactNode } from "react";
+import { useRouter } from "next/navigation";
 import { checkSession, getMe } from "@/lib/api/clientApi";
 import { useAuthStore } from "@/lib/store/authStore";
 
 export default function AuthProvider({ children }: { children: ReactNode }) {
+  const router = useRouter();
   const { setUser, clearIsAuthenticated } = useAuthStore();
 
   useEffect(() => {
@@ -19,11 +21,13 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         }
       } catch {
         clearIsAuthenticated();
+      } finally {
+        router.refresh();
       }
     }
 
     checkAuth();
-  }, [setUser, clearIsAuthenticated]);
+  }, [setUser, clearIsAuthenticated, router]);
 
   return children;
 }

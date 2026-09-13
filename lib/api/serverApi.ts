@@ -1,4 +1,5 @@
 import { cookies } from "next/headers";
+import type { AxiosResponse } from "axios";
 import { api } from "./api";
 import type { Note, NotesResponse } from "@/types/note";
 import type { User } from "@/types/user";
@@ -46,12 +47,12 @@ interface SessionResponse {
   success: boolean;
 }
 
-export async function checkSession(): Promise<boolean> {
+// Returns the raw response so callers (e.g. proxy) can forward refreshed Set-Cookie headers.
+export async function checkSession(): Promise<AxiosResponse<SessionResponse>> {
   const cookieStore = await cookies();
-  const { data } = await api.get<SessionResponse>("/auth/session", {
+  return api.get<SessionResponse>("/auth/session", {
     headers: {
       Cookie: cookieStore.toString(),
     },
   });
-  return data.success;
 }

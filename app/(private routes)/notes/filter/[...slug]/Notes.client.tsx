@@ -4,10 +4,10 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
+import NoteList from "@/components/NoteList/NoteList";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchBox from "@/components/SearchBox/SearchBox";
 import { fetchNotes } from "@/lib/api/clientApi";
-import { formatDate } from "@/lib/formatDate";
 import css from "./Notes.module.css";
 
 interface NotesClientProps {
@@ -46,20 +46,7 @@ export default function NotesClient({ tag }: NotesClientProps) {
       {!isLoading && !isError && notes.length === 0 && (
         <p className={css.message}>No notes found.</p>
       )}
-      <ul className={css.grid}>
-        {notes.map((note) => (
-          <li className={css.card} key={note.id}>
-            <Link href={`/notes/${note.id}`}>
-              <span className={css.tag}>{note.tag}</span>
-              <h2>{note.title}</h2>
-              <p>{note.content}</p>
-              <time dateTime={note.createdAt}>
-                {formatDate(note.createdAt)}
-              </time>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {notes.length > 0 && <NoteList notes={notes} />}
       {totalPages > 1 && (
         <Pagination
           pageCount={totalPages}
